@@ -1,0 +1,43 @@
+
+
+/* Force light mode UI elements for cupcake theme */
+[data-theme="cupcake"] {
+
+    .bg-primary\/10 {
+        background-color: rgba(59, 130, 246, 0.1) !important; /* example: red with 10% opacity */
+    }
+
+    color-scheme: light !important;
+
+    /* Explicit DaisyUI cupcake colors (approx hex from OKLCH) */
+    --color-base-100: #fdf6e3;
+    --color-base-200: #f9f9f9;
+    --color-base-300: #e0e0e0;
+    --color-base-content: #333333;
+
+    --color-primary: #3b82f6;
+    --color-primary-rgb: 59, 130, 246; /* RGB without # or rgb() */
+
+    --color-primary-content: #ffffff;
+
+    --color-secondary: #f000b8;
+    --color-secondary-content: #ffffff;
+
+    --color-accent: #37cdbe;
+    --color-accent-content: #163835;
+
+    --color-neutral: #444c5c;
+    --color-neutral-content: #f5f6f7;
+
+    --color-info: #3abff8;
+    --color-info-content: #1c3d5a;
+
+    --color-success: #36d399;
+    --color-success-content: #164f3c;
+
+    --color-warning: #fbbd23;
+    --color-warning-content: #4a3b0e;
+
+    --color-error: #f87272;
+    --color-error-content: #5f1f1f;
+}
