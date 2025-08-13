@@ -15,11 +15,12 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 
+if(process.env.NODE_ENV !== "production") {
 app.use(cors({
     origin: ["http://localhost:5175", `http://localhost:${PORT}`],
     credentials: true
 }));
-
+}
 app.use(cookieParser());
 
 app.use(fileUpload({

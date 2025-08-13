@@ -19,7 +19,6 @@ export const useChatStore = create((set) => ({
             toast.error(error.response.data.message);
         } finally {
             set({isUsersLoading: false});
-            toast.success("Finished Loading Users");
         }
     },
 
