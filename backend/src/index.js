@@ -16,7 +16,7 @@ const __dirname = path.resolve();
 app.use(express.json());
 
 app.use(cors({
-    origin: "http://localhost:" + 5175,
+    origin: ["http://localhost:5175", `http://localhost:${PORT}`],
     credentials: true
 }));
 
