@@ -1,5 +1,5 @@
 import './App.css'
-import {Route, Routes, Navigate} from "react-router-dom";
+import {Route, Routes, Navigate, useLocation} from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -12,15 +12,36 @@ import {Loader} from "lucide-react";
 import {Toaster} from "react-hot-toast";
 import {useThemeStore} from "./store/useThemeStore.js";
 function App() {
-    const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
+    const {authUser, checkAuth, isCheckingAuth, onlineUsers} = useAuthStore();
     const {theme} = useThemeStore();
-
 
     useEffect(() => {
         checkAuth()
     }, [checkAuth])
 
-    console.log({authUser});
+    const location = useLocation();
+
+    useEffect(() => {
+        switch (location.pathname) {
+            case '/':
+                document.title = 'Home | Strife';
+                break;
+            case '/settings':
+                document.title = 'Settings | Strife';
+                break;
+            case '/profile':
+                document.title = 'Profile | Strife';
+                break;
+            case '/login':
+                document.title = 'Login | Strife';
+                break;
+            case '/signup':
+                document.title = 'Signup | Strife';
+                break;
+            default:
+                document.title = 'Strife';
+        }
+    }, [location.pathname]);
 
     if(isCheckingAuth && !authUser) return (
         <div className="flex items-center justify-center h-screen">

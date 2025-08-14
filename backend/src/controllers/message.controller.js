@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../lib/cloudinary.js";
+import {getReceiverSocketId, io} from "../lib/socket.js";
 
 export const getUsersForSidebar = async (req, res) => {
     try{
@@ -35,13 +36,19 @@ export const getMessages = async (req,res) => {
 
 export const sendMessage = async (req, res) => {
     try {
-        const {text, image} = req.body;
+        console.log(req.body);
+        console.log(req.files);
+        if (!req.body) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+        const {text} = req.body;
         const {id: receiverId} = req.params;
         const senderId = req.user._id;
 
+
         let imageUrl;
-        if(image) {
-            const uploadedResponse = await cloudinary.uploader.upload(image);
+        if(req.files && req.files.image) {
+            const uploadedResponse = await cloudinary.uploader.upload(req.files.image.tempFilePath);
             imageUrl = uploadedResponse.secure_url;
         }
 
@@ -54,7 +61,10 @@ export const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
-        //todo: realtime functionality goes here => socket.io;
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        if(receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
 
         res.status(201).json(newMessage);
 

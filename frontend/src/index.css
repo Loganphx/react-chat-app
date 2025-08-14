@@ -32,3 +32,16 @@ html, body, #root {
         display: inline;
     }
 }
+
+.overflow-y-auto {
+    scroll-behavior: smooth;
+}
+
+.underline-on-hover {
+    text-decoration: none; /* No underline initially */
+    transition: text-decoration 0.3s ease; /* Smooth transition */
+}
+
+.underline-on-hover:hover {
+    text-decoration: underline; /* Underline on hover */
+}

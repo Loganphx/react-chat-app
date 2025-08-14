@@ -14,7 +14,7 @@ router.post("/logout", async (req, res, next) => {
 router.put("/update-profile", protectRoute, async (req, res, next) => {
     await updateProfile(req, res);
 });
-router.get("/check", async (req, res, next) => {
+router.get("/check", protectRoute, async (req, res, next) => {
     await checkAuth(req,res);
 });
 

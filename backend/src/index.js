@@ -6,14 +6,20 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import path from "node:path";
-
-const app = express();
+import {app, server} from "./lib/socket.js";
+import seedDatabase from "./seeds/user.seed.js";
 
 const PORT = process.env.PORT;
 
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(fileUpload({
+    useTempFiles: true, // so you can send file paths directly to Cloudinary
+    tempFileDir: "/tmp/",
+    createParentPath: true
+}));
 
 if(process.env.NODE_ENV !== "production") {
 app.use(cors({
@@ -21,13 +27,6 @@ app.use(cors({
     credentials: true
 }));
 }
-app.use(cookieParser());
-
-app.use(fileUpload({
-    useTempFiles: true, // so you can send file paths directly to Cloudinary
-    tempFileDir: "/tmp/",
-    createParentPath: true
-}));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
@@ -43,18 +42,19 @@ if(process.env.NODE_ENV === "production") {
 const connections = new Set();
 
 await connectDB();
-const server = app.listen(PORT, async () => {
+// await seedDatabase();
+const expressServer = server.listen(PORT, async () => {
     console.log('Server running on port ', PORT);
 })
 
-server.on('connection', (conn) => {
+expressServer.on('connection', (conn) => {
     connections.add(conn);
 
     conn.on('close', () => {
         connections.delete(conn);
     });
 });
-server.on('error', (err) => {
+expressServer.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
         console.error(`Port ${PORT} is already in use!`);
         process.exit(1);
