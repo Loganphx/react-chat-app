@@ -2,7 +2,7 @@ import React from 'react'
 
 const AuthImagePattern = ({title, subtitle}) => {
     return (
-        <div className="lg:flex items-center justify-center bg-base-200 p-12">
+        <div className="flex items-center justify-center min-h-screen bg-base-200 p-12">
             <div className="max-w-md text-center">
                 <div className="grid grid-cols-3 gap-3 mb-8">
                     {[...Array(9)].map((_, i) => (

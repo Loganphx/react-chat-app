@@ -17,8 +17,8 @@ const Sidebar = () => {
     if(isUsersLoading) return <SidebarSkeleton/>
 
     return (
-        <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-            <div className="border-b border-base-300 w-full p-5 h-full">
+        <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200  min-w-[125px]">
+            <div className="border-b border-base-300 p-5 h-full flex flex-col">
                 <div className="flex items-center gap-2">
                     <Users className="size-6"/>
                     <span className="font-medium hidden lg:block">Contacts</span>
@@ -36,7 +36,7 @@ const Sidebar = () => {
                     <span className="text-xs text-zinc-500">({onlineUsers.length-1} online)</span>
                 </div>
                 {/* TODO: Online filter */}
-                <div className="overflow y-auto w-full py-3">
+                <div className="overflow-y-auto w-full py-3 h-full">
                     {filteredUsers.map((user) => (
                         <button
                         key={user._id}
